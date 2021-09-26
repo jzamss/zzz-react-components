@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Form, useForm, useFormState } from "react-final-form";
 import {
   ActionBar,
-  Submit,
+  SubmitButton,
   BackLink,
   Error,
   MsgBox,
@@ -127,13 +127,12 @@ const Wizard = ({
                 )}
                 {page > 0 && <BackLink action={previous} />}
                 {!isLastPage && (
-                  <Submit caption="Next" submitting={form.submitting} />
+                  <SubmitButton caption="Next" submitting={form.submitting} />
                 )}
                 {isLastPage && (
-                  <Submit caption="Submit" submitting={form.submitting} />
+                  <SubmitButton caption="Submit" submitting={form.submitting} />
                 )}
               </ActionBar>
-              {showFormData && <pre>{JSON.stringify(values, null, 2)}</pre>}
             </form>
           );
         }}

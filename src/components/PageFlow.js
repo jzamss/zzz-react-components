@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Content, DataContext } from "rsi-react-components";
+import EntityContext from "../contexts/EntityContext";
+import Content from "./Content";
 
 const PageFlow = ({ initialData, children, location, history, pages, ...rest }) => {
   const [step, setStep] = useState(0);
@@ -41,11 +42,11 @@ const PageFlow = ({ initialData, children, location, history, pages, ...rest }) 
   }
 
   return (
-    <DataContext.Provider value={[data, updateData]}>
+    <EntityContext.Provider value={[data, updateData]}>
       <Content>
         <PageComponent page={activePage} {...compProps} />
       </Content>
-    </DataContext.Provider>
+    </EntityContext.Provider>
   );
 };
 

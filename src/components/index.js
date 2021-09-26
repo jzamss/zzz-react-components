@@ -52,7 +52,7 @@ export { default as PhoneNo } from "./PhoneNo";
 export { default as Radio } from "./Radio";
 export { default as ReportViewer } from "./ReportViewer";
 export { default as Spacer } from "./Spacer";
-export { default as Submit } from "./Submit";
+export { default as SubmitButton } from "./SubmitButton";
 export { default as Subtitle } from "./Subtitle";
 export { default as Subtitle2 } from "./Subtitle2";
 export { default as Stepper } from "./Stepper";
