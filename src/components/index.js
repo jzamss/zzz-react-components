@@ -1,5 +1,6 @@
 export { default as ActionBar } from "./ActionBar";
 export { default as AppBar } from "./AppBar";
+export { default as AppContext } from "./AppContext";
 export { default as Avatar } from "./Avatar";
 export { default as BackLink } from "./BackLink";
 export { default as Button } from "./Button";

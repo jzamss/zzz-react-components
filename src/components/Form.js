@@ -1,43 +1,36 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Form as RFForm } from "react-final-form";
 import createDecorator from "final-form-focus";
 
 const focusOnError = createDecorator();
 
 const Form = ({
-  initialData = {},
-  onSubmit,
+  initialEntity = {},
+  onSubmit = () => {},
   validate,
   children,
-  decorators = [focusOnError]
+  decorators = [focusOnError],
+  render
 }) => {
-  const formRef = useRef();
-  const formApi = useRef();
-  
-  const handleFormSubmit = (data) => {
-    if (formRef.current && formRef.current.reportValidity()) {
-      if (typeof(onSubmit) === "function") {
-        onSubmit(data, formApi.current);    
-      }
-    }
-  };
-
   return (
     <RFForm
-      onSubmit={handleFormSubmit}
-      initialValues={initialData}
+      onSubmit={onSubmit}
+      initialValues={initialEntity}
       validate={validate}
       decorators={decorators}
-    >
-      {(props) => {
-        formApi.current = props.form;
-        return (
-          <form ref={formRef} onSubmit={props.handleSubmit}>
-            {typeof children === "function" ? children(props) : children}
-          </form>
-        );
+      render={({ handleSubmit, form, ...rest }) => {
+        let items = null;
+        if (render) {
+          if (typeof render === "function") items = render(rest);
+          else items = render;
+        } else if (typeof children === "function") {
+          items = children(rest);
+        } else {
+          items = children;
+        }
+        return <form onSubmit={handleSubmit}>{items}</form>;
       }}
-    </RFForm>
+    />
   );
 };
 

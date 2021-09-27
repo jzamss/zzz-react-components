@@ -1,1 +1,1 @@
-export { default as EntityContext } from "./EntityContext";
+export * from "./EntityContext";

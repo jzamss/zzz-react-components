@@ -2,7 +2,7 @@ import React from "react";
 import MuiButton from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
-import { useForm, useFormState } from "react-final-form";
+import { FormSpy } from "react-final-form";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -18,27 +18,32 @@ const SubmitButton = ({
   size = "small",
   children,
   visible = true,
-  disabled = false,
+  disabled = false
 }) => {
   const classes = useStyles();
 
   if (!visible) return null;
 
-  const form = useForm();
-  const formState = useFormState();
-
   return (
-    <MuiButton
-      className={classes.button}
-      type="submit"
-      variant={variant}
-      color={color}
-      size={size}
-      endIcon={formState.submitting && <CircularProgress size={18} color="secondary" />}
-      disabled={disabled || formState.submitting}
-    >
-      {caption || children}
-    </MuiButton>
+    <FormSpy subscription={{ submitting: true }}>
+      {({ submitting }) => {
+        return (
+          <MuiButton
+            className={classes.button}
+            type="submit"
+            variant={variant}
+            color={color}
+            size={size}
+            endIcon={
+              submitting && <CircularProgress size={18} color="secondary" />
+            }
+            disabled={disabled || submitting}
+          >
+            {caption || children}
+          </MuiButton>
+        );
+      }}
+    </FormSpy>
   );
 };
 

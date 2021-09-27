@@ -1,3 +1,11 @@
+export const isFunc = (fn) => {
+  return typeof(fn) === "function";
+}
+
+export const isAsync = (fn) => {
+  return fn.constructor.name === "AsyncFunction";
+}
+
 export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const padLeft = (str, len, padChar = "0") => {

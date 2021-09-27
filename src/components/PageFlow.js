@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import EntityContext from "../contexts/EntityContext";
-import Content from "./Content";
 
-const PageFlow = ({ initialData, children, location, history, pages, ...rest }) => {
+const PageFlow = ({
+  initialEntity = {},
+  children,
+  location,
+  history,
+  pages,
+  name,
+  ...rest
+}) => {
   const [step, setStep] = useState(0);
-  const [data, setData] = useState(initialData);
-  
+
   const onComplete = () => {
     history.goBack();
   };
@@ -14,9 +19,8 @@ const PageFlow = ({ initialData, children, location, history, pages, ...rest }) 
     history.goBack();
   };
 
-
   const moveNextStep = () => {
-    setStep((cs) => cs + 1);
+    setStep((cs) => (cs + 1 == pages.length ? cs : cs + 1));
   };
 
   const movePrevStep = () => {
@@ -34,20 +38,11 @@ const PageFlow = ({ initialData, children, location, history, pages, ...rest }) 
     movePrevStep,
     onComplete,
     onCancel,
+    page: activePage,
     ...rest
   };
 
-  const updateData = (updatedData) => {
-    setData({...data, ...updatedData});
-  }
-
-  return (
-    <EntityContext.Provider value={[data, updateData]}>
-      <Content>
-        <PageComponent page={activePage} {...compProps} />
-      </Content>
-    </EntityContext.Provider>
-  );
+  return <PageComponent page={activePage} {...compProps} />;
 };
 
 export default PageFlow;

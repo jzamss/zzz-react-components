@@ -3,13 +3,13 @@ import { TextField } from "@material-ui/core";
 import NumberFormat from "react-number-format";
 import { Field } from "react-final-form";
 
-const IntegerFormatter = ({ onChange, inputRef, ...rest }) => {
+const IntegerFormatter = ({ onChange, inputRef, thousandSeparator, ...rest }) => {
   return (
     <NumberFormat
       {...rest}
       getInputRef={inputRef}
       isNumericString
-      thousandSeparator=","
+      thousandSeparator={thousandSeparator}
       decimalScale={0}
       fixedDecimalScale={true}
       allowNegative={true}
@@ -30,8 +30,15 @@ const Integer = ({
   readOnly = false,
   fullWidth = true,
   textAlign = "right",
+  thousandSeparator = true
 }) => {
   if (!visible) return null;
+
+  const inputProps = {
+    style: { textAlign },
+    readOnly,
+    thousandSeparator: thousandSeparator ? "," : ""
+  };
 
   return (
     <Field name={name}>
@@ -47,9 +54,9 @@ const Integer = ({
           helperText={meta.touched && meta.error != null ? meta.error : null}
           fullWidth={fullWidth}
           InputProps={{
-            inputComponent: IntegerFormatter,
+            inputComponent: IntegerFormatter
           }}
-          inputProps={{ style: { textAlign }, readOnly }}
+          inputProps={inputProps}
         />
       )}
     </Field>

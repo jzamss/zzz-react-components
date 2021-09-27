@@ -11,14 +11,14 @@ import {
   Spacer,
   Card
 } from ".";
+import { isFunc } from "../lib/util";
 
 const Wizard = ({
-  initialData,
+  initialEntity={},
   onSubmit,
   children,
   showActionBar = true,
   showErrorDialog: initialShowErrorDialog = false,
-  showFormData = false,
   visible = true,
   title,
   subtitle
@@ -51,7 +51,7 @@ const Wizard = ({
     return activePage.props.validate ? activePage.props.validate(values) : {};
   };
 
-  const onSubmitCallback = (error = false, showErrorDialog = false) => {
+  const onSubmitCallback = (error, showErrorDialog = false, formCallback) => {
     setErrorMsg(null);
     if (!error) {
       const values = formApi.current.getState().values;
@@ -61,21 +61,20 @@ const Wizard = ({
       } else {
         next(values);
       }
+      formCallback();
     } else {
       setShowErrorDialog(showErrorDialog);
       setShowError(true);
       setErrorMsg(error);
+      formCallback(error);
     }
   };
 
-  const handleFormSubmit = (values) => {
-    if (formRef.current && !formRef.current.reportValidity()) {
-      return;
-    }
-
+  const handleFormSubmit = (values, form, callback) => {
     const activePage = getActivePage();
-    if (activePage.props.onSubmit) {
-      activePage.props.onSubmit(values, onSubmitCallback, formApi.current);
+    const onSubmit = activePage.props.onSubmit; 
+    if (isFunc(onSubmit)) {
+      onSubmit(values, (err, showErrorDialog) => onSubmitCallback(err, showErrorDialog, callback), form);
     } else {
       onSubmitCallback();
     }
@@ -95,7 +94,7 @@ const Wizard = ({
       <Subtitle>{subtitle || (page && page.caption)}</Subtitle>
 
       <Form
-        initialValues={initialData}
+        initialValues={initialEntity}
         validate={validate}
         onSubmit={handleFormSubmit}
       >
@@ -133,6 +132,7 @@ const Wizard = ({
                   <SubmitButton caption="Submit" submitting={form.submitting} />
                 )}
               </ActionBar>
+              <pre>{JSON.stringify(values, null, 2)}</pre>
             </form>
           );
         }}
@@ -145,7 +145,7 @@ Wizard.Page = ({ children }) => {
   const form = useForm();
   const formState = useFormState();
   if (typeof children === "function") {
-    return children({ form, values: formState.values });
+    return children({values: formState.values, form });
   }
   return children;
 };

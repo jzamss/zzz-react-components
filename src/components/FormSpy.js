@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { FormSpy as RFFormSpy } from "react-final-form";
 
 const FormSpy = ({ subscription }) => {

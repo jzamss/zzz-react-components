@@ -1,6 +1,7 @@
 import React from "react";
 import { Field } from "react-final-form";
 import TextField from "@material-ui/core/TextField";
+import { required as requiredValidator } from "../validators";
 
 const Text = ({
   name,
@@ -13,7 +14,7 @@ const Text = ({
   fullWidth = true,
   textCase = "UPPER",
   type = "text",
-  autoFocus = false,
+  autoFocus = false
 }) => {
   if (!visible) return null;
 
@@ -29,7 +30,11 @@ const Text = ({
   };
 
   return (
-    <Field name={name} subscribe={{ touched: true, error: true }}>
+    <Field
+      name={name}
+      subscribe={{ touched: true, error: true }}
+      validate={required ? requiredValidator : null}
+    >
       {({ input, meta }) => (
         <TextField
           {...input}

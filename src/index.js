@@ -1,8 +1,9 @@
+export * from "./contexts";
 export * from "./components";
 export * from "./hooks";
 export * from "./lib/util";
 export * from "./lib";
-export * from "./contexts";
+export * from "./validators";
 
 export { default as AccountBoxIcon } from "@material-ui/icons/AccountBox";
 export { default as CheckIcon } from "@material-ui/icons/Check";
