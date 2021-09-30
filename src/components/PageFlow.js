@@ -6,7 +6,6 @@ const PageFlow = ({
   location,
   history,
   pages,
-  name,
   ...rest
 }) => {
   const [step, setStep] = useState(0);

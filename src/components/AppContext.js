@@ -11,8 +11,6 @@ const AppContext = ({ initialEntity = {}, children }) => {
     });
   };
 
-  console.log("APPCONTEXT", entity);
-
   return (
     <EntityProvider
       entity={entity}

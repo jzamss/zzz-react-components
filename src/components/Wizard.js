@@ -132,7 +132,6 @@ const Wizard = ({
                   <SubmitButton caption="Submit" submitting={form.submitting} />
                 )}
               </ActionBar>
-              <pre>{JSON.stringify(values, null, 2)}</pre>
             </form>
           );
         }}
