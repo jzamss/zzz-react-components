@@ -5,6 +5,8 @@ export * from "./lib/util";
 export * from "./lib";
 export * from "./validators";
 
+export { FORM_ERROR } from "final-form";
+
 export { default as AccountBoxIcon } from "@material-ui/icons/AccountBox";
 export { default as CheckIcon } from "@material-ui/icons/Check";
 export { default as PageviewIcon } from "@material-ui/icons/Pageview";

@@ -28,7 +28,7 @@ export function formatNumber(num = 0) {
 }
 
 export function currencyFormat(num, defaultValue = 0) {
-  if (!num) return defaultValue;
+  if (num === undefined) num = defaultValue;
   const val = typeof num === "string" ? Number(num) : num;
   return val.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }

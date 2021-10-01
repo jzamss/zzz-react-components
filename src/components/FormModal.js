@@ -9,7 +9,7 @@ import Button from "./Button";
 import FormButton from "./FormButton";
 
 const FormModal = ({
-  initialData,
+  initialEntity,
   caption,
   children,
   open,
@@ -23,7 +23,7 @@ const FormModal = ({
   }
 
   return (
-    <Form initialData={initialData}>
+    <Form initialEntity={initialEntity}>
       <Dialog open={open}>
         <DialogTitle>{caption}</DialogTitle>
         <DialogContent>
